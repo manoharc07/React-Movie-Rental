@@ -13,11 +13,11 @@ function App() {
       <NavBar />
       <main className="container">
         <Switch>
+          <Route path="/movies/:id" component={MovieForm} />
+          <Route path="/movies" component={Movies} />
           <Route path="/customers" component={Customers} />
           <Route path="/rentals" component={Rentals} />
-          <Route path="/movies" exact component={Movies} />
           <Route path="/not-found" component={Notfound} />
-          <Route path="/movies/:id" component={MovieForm} />
           <Redirect from="/" exact to="/movies" />
           <Redirect to="/not-found" />
         </Switch>
