@@ -1,8 +1,9 @@
 import _ from "lodash";
 import "bootstrap/dist/css/bootstrap.css";
 import React, { Component } from "react";
-import { getMovies } from "../services/fakeMovieService";
-import { getGenres } from "../services/fakeGenreService";
+import { toast } from "react-toastify";
+import { getMovies, deleteMovie } from "../services/movieService";
+import { getGenres } from "../services/genreService";
 import Pagination from "./common/pagination";
 import MoviesTable from "./moviesTable";
 import { pagination } from "../utils/pagination";
@@ -18,20 +19,33 @@ class Movies extends Component {
     genres: [],
     sortColumn: { col: "title", order: "asc" },
   };
-  componentDidMount() {
-    const genres = [{ name: "All Genres", _id: "" }, ...getGenres()];
-    this.setState({ movies: getMovies(), genres });
+  async componentDidMount() {
+    const { data: genreData } = await getGenres();
+    const genres = [{ name: "All Genres", _id: "" }, ...genreData];
+    const { data: moviesData } = await getMovies();
+    this.setState({ movies: moviesData, genres });
   }
-  handleDelete = (movieToRemove) => {
+  handleDelete = async (movieToRemove) => {
+    const originalMovies = this.state.movies;
     this.setState({
-      movies: this.state.movies.filter(
-        (movie) => movie._id !== movieToRemove._id
-      ),
+      movies: originalMovies.filter((movie) => movie._id !== movieToRemove._id),
     });
+    try {
+      await deleteMovie(movieToRemove._id);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        toast.error("Already deleted");
+      this.setState({ movies: originalMovies });
+    }
   };
   handlePage = (i) => {
     this.setState({ currentPage: i });
   };
+
+  handleSort = (sortColumn) => {
+    this.setState({ sortColumn });
+  };
+
   handleLike = (movie) => {
     const movies = [...this.state.movies];
     const index = movies.indexOf(movie);
@@ -63,7 +77,7 @@ class Movies extends Component {
     else if (selectedGenre && selectedGenre._id)
       filtered = allMovies.filter((m) => m.genre._id === selectedGenre._id);
 
-    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+    const sorted = _.orderBy(filtered, [sortColumn.col], [sortColumn.order]);
 
     const movies = pagination(sorted, currentPage, pageSize);
 

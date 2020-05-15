@@ -1,9 +1,10 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { getGenres } from "./../services/fakeGenreService";
-import { getMovie, saveMovie } from "./../services/fakeMovieService";
-import { Link } from "react-router-dom";
+import { getGenres } from "./../services/genreService";
+import { getMovie, saveMovie } from "./../services/movieService";
+import { toast } from "react-toastify";
+
 class MovieForm extends Form {
   state = {
     data: {
@@ -31,25 +32,29 @@ class MovieForm extends Form {
       .max(10)
       .label("Daily Rental Rate"),
   };
-  componentDidMount() {
-    const genres = getGenres();
-    this.setState({ genres });
+  async componentDidMount() {
+    const { data: genresData } = await getGenres();
+    this.setState({ genres: genresData });
     const { match } = this.props;
     const id = match.params.id;
     if (id === "new") return;
-    const movie = getMovie(id);
-    if (!movie) return this.props.history.replace("/not-found");
-    const data = {
-      _id: movie._id,
-      title: movie.title,
-      genreId: movie.genre._id,
-      numberInStock: movie.numberInStock,
-      dailyRentalRate: movie.dailyRentalRate,
-    };
-    this.setState({ data });
+    try {
+      const { data: movie } = await getMovie(id);
+      const data = {
+        _id: movie._id,
+        title: movie.title,
+        genreId: movie.genre._id,
+        numberInStock: movie.numberInStock,
+        dailyRentalRate: movie.dailyRentalRate,
+      };
+      this.setState({ data });
+    } catch (ex) {
+      toast.error("Movie not found!");
+      return this.props.history.replace("/not-found");
+    }
   }
-  doSubmit = () => {
-    saveMovie(this.state.data);
+  doSubmit = async () => {
+    await saveMovie(this.state.data);
     this.props.history.replace("/movies");
   };
   render() {
