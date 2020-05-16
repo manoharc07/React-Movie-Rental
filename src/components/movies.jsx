@@ -85,6 +85,7 @@ class Movies extends Component {
   };
   render() {
     const { totalCount, data } = this.getPagedData();
+    const { user } = this.props;
     return (
       <div className="row">
         <div className="col-3">
@@ -95,13 +96,15 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link
-            to="/movies/new"
-            className="btn btn-primary"
-            style={{ marginBottom: 20 }}
-          >
-            New Movie
-          </Link>
+          {user && (
+            <Link
+              to="/movies/new"
+              className="btn btn-primary"
+              style={{ marginBottom: 20 }}
+            >
+              New Movie
+            </Link>
+          )}
           <p>Showing {totalCount} available movies!</p>
           <Searchbox
             value={this.state.SearchQuery}

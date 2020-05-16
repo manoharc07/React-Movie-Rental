@@ -1,7 +1,10 @@
 import React from "react";
-
+import { login } from "../services/authService";
 import Joi from "joi-browser";
 import Form from "./common/form";
+import { toast } from "react-toastify";
+import { getCurrentUser } from "./../services/authService";
+import { Redirect } from "react-router-dom";
 class LoginForm extends Form {
   state = { data: { username: "", password: "" }, errors: {} };
   schema = {
@@ -9,10 +12,18 @@ class LoginForm extends Form {
     password: Joi.string().required().label("Password"),
   };
 
-  doSubmit = () => {
-    console.log("Submitted");
+  doSubmit = async () => {
+    try {
+      const user = this.state.data;
+      await login(user);
+      const { state } = this.props.location;
+      window.location = state ? state.from.pathname : "/";
+    } catch (ex) {
+      toast.error("Invalid Username or Password");
+    }
   };
   render() {
+    if (getCurrentUser()) return <Redirect to="/" />;
     return (
       <div className="conatainer">
         <h2>Login</h2>

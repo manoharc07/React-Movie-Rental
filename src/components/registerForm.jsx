@@ -1,6 +1,9 @@
 import React from "react";
 import Form from "./common/form";
 import Joi from "joi-browser";
+import { toast } from "react-toastify";
+import { register } from "./../services/userService";
+import { loginWithJwt } from "../services/authService";
 class RegisterForm extends Form {
   state = { data: { username: "", password: "", name: "" }, errors: {} };
   schema = {
@@ -8,8 +11,16 @@ class RegisterForm extends Form {
     password: Joi.string().required().min(5).label("Password"),
     name: Joi.string().required().label("Name"),
   };
-  doSubmit = () => {
-    console.log("Register");
+  doSubmit = async () => {
+    try {
+      const response = await register(this.state.data);
+      loginWithJwt(response.headers["x-auth-token"]);
+      toast.info("Account created successfully");
+      window.location = "/";
+    } catch (ex) {
+      toast.error("User already exists");
+      this.props.history.replace("/login");
+    }
   };
   render() {
     return (
