@@ -41,7 +41,6 @@ class App extends Component {
             <Route path="/logout" component={Logout} />
             <Route path="/not-found" component={Notfound} />
             <Redirect from="/" exact to="/movies" />
-            <Redirect from="/react-project" exact to="/" />
             <Redirect to="/not-found" />
           </Switch>
         </main>
