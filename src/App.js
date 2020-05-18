@@ -33,7 +33,7 @@ class App extends Component {
             <Route path="/register" component={RegisterForm} />
             <ProtectedRoute path="/movies/:id" component={MovieForm} />
             <Route
-              path="/react-project/movies"
+              path="/movies"
               render={(props) => <Movies {...props} user={this.state.user} />}
             />
             <Route path="/customers" component={Customers} />
