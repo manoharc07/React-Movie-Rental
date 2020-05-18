@@ -40,6 +40,7 @@ class App extends Component {
             <Route path="/rentals" component={Rentals} />
             <Route path="/logout" component={Logout} />
             <Route path="/not-found" component={Notfound} />
+            <Redirect from="/react-project" exact to="/movies" />
             <Redirect from="/" exact to="/movies" />
             <Redirect to="/not-found" />
           </Switch>
