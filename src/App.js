@@ -29,20 +29,22 @@ class App extends Component {
         <NavBar user={user} />
         <main className="container">
           <Switch>
-            <Route path="/login" component={LoginForm} />
-            <Route path="/register" component={RegisterForm} />
-            <ProtectedRoute path="/movies/:id" component={MovieForm} />
+            <Route path="/react-project/login" component={LoginForm} />
+            <Route path="/react-project/register" component={RegisterForm} />
+            <ProtectedRoute
+              path="/react-project/movies/:id"
+              component={MovieForm}
+            />
             <Route
-              path="/movies"
+              path="/react-project/movies"
               render={(props) => <Movies {...props} user={this.state.user} />}
             />
-            <Route path="/customers" component={Customers} />
-            <Route path="/rentals" component={Rentals} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/not-found" component={Notfound} />
-            <Redirect from="/react-project" exact to="/movies" />
-            <Redirect from="/" exact to="/movies" />
-            <Redirect to="/not-found" />
+            <Route path="/react-project/customers" component={Customers} />
+            <Route path="/react-project/rentals" component={Rentals} />
+            <Route path="/react-project/logout" component={Logout} />
+            <Route path="/react-project/not-found" component={Notfound} />
+            <Redirect from="/react-project/" exact to="/react-project/movies" />
+            <Redirect to="/react-project/not-found" />
           </Switch>
         </main>
       </React.Fragment>

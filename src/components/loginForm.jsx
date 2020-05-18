@@ -17,13 +17,13 @@ class LoginForm extends Form {
       const user = this.state.data;
       await login(user);
       const { state } = this.props.location;
-      window.location = state ? state.from.pathname : "/";
+      window.location = state ? state.from.pathname : "/react-project";
     } catch (ex) {
       toast.error("Invalid Username or Password");
     }
   };
   render() {
-    if (getCurrentUser()) return <Redirect to="/" />;
+    if (getCurrentUser()) return <Redirect to="/react-project" />;
     return (
       <div className="conatainer">
         <h2>Login</h2>

@@ -16,10 +16,10 @@ class RegisterForm extends Form {
       const response = await register(this.state.data);
       loginWithJwt(response.headers["x-auth-token"]);
       toast.info("Account created successfully");
-      window.location = "/";
+      window.location = "/react-project/";
     } catch (ex) {
       toast.error("User already exists");
-      this.props.history.replace("/login");
+      this.props.history.replace("/react-project/login");
     }
   };
   render() {
