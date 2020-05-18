@@ -29,11 +29,14 @@ class App extends Component {
         <NavBar user={user} />
         <main className="container">
           <Switch>
-            <Route path="/login" component={LoginForm} />
-            <Route path="/register" component={RegisterForm} />
-            <ProtectedRoute path="/movies/:id" component={MovieForm} />
+            <Route path="/react-project/login" component={LoginForm} />
+            <Route path="/react-project/register" component={RegisterForm} />
+            <ProtectedRoute
+              path="/react-project/movies/:id"
+              component={MovieForm}
+            />
             <Route
-              path="/movies"
+              path="/react-project/movies"
               render={(props) => <Movies {...props} user={this.state.user} />}
             />
             <Route path="/react-project/customers" component={Customers} />
