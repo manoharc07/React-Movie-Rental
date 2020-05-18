@@ -1,30 +1,21 @@
 import React, { Component } from "react";
-import Like from "./common/like";
+import auth from "../services/authService";
 import { Link } from "react-router-dom";
-import { getCurrentUser } from "../services/authService";
 import Table from "./common/table";
+import Like from "./common/like";
+
 class MoviesTable extends Component {
-  raiseSort(col) {
-    let sortColumn = { ...this.props.sortColumn };
-    if (sortColumn.col === col) {
-      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
-    } else {
-      sortColumn.col = col;
-      sortColumn.order = "asc";
-    }
-    this.props.onSort(sortColumn);
-  }
   columns = [
     {
-      col: "title",
+      path: "title",
       label: "Title",
       content: (movie) => (
         <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
       ),
     },
-    { col: "genre.name", label: "Genre" },
-    { col: "numberInStock", label: "Stock" },
-    { col: "dailyRentalRate", label: "Cost" },
+    { path: "genre.name", label: "Genre" },
+    { path: "numberInStock", label: "Stock" },
+    { path: "dailyRentalRate", label: "Rate" },
     {
       key: "like",
       content: (movie) => (
@@ -32,12 +23,13 @@ class MoviesTable extends Component {
       ),
     },
   ];
+
   deleteColumn = {
     key: "delete",
     content: (movie) => (
       <button
         onClick={() => this.props.onDelete(movie)}
-        className="btn btn-primary btn-danger"
+        className="btn btn-danger btn-sm"
       >
         Delete
       </button>
@@ -46,19 +38,22 @@ class MoviesTable extends Component {
 
   constructor() {
     super();
-    const user = getCurrentUser();
+    const user = auth.getCurrentUser();
     if (user && user.isAdmin) this.columns.push(this.deleteColumn);
   }
+
   render() {
-    const { movies } = this.props;
+    const { movies, onSort, sortColumn } = this.props;
+
     return (
       <Table
-        data={movies}
         columns={this.columns}
-        sortColumn={this.props.sortColumn}
-        onSort={this.props.onSort}
+        data={movies}
+        sortColumn={sortColumn}
+        onSort={onSort}
       />
     );
   }
 }
+
 export default MoviesTable;

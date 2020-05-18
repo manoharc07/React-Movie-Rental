@@ -26,3 +26,10 @@ export function getCurrentUser() {
     return null;
   }
 }
+export default {
+  login,
+  getJwt,
+  loginWithJwt,
+  logout,
+  getCurrentUser,
+};
