@@ -3,7 +3,7 @@ import { logout } from "../services/authService";
 class Logout extends Component {
   componentDidMount() {
     logout();
-    window.location = "/react-project/";
+    window.location = "/";
   }
   render() {
     return null;

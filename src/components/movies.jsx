@@ -98,7 +98,7 @@ class Movies extends Component {
         <div className="col">
           {user && (
             <Link
-              to="/react-project/movies/new"
+              to="/movies/new"
               className="btn btn-primary"
               style={{ marginBottom: 20 }}
             >

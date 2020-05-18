@@ -50,12 +50,12 @@ class MovieForm extends Form {
       this.setState({ data });
     } catch (ex) {
       toast.error("Movie not found!");
-      return this.props.history.replace("/react-project/not-found");
+      return this.props.history.replace("/not-found");
     }
   }
   doSubmit = async () => {
     await saveMovie(this.state.data);
-    this.props.history.replace("/react-project/movies");
+    this.props.history.replace("/movies");
   };
   render() {
     return (
