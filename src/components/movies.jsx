@@ -9,7 +9,7 @@ import Pagination from "./common/pagination";
 import { Link } from "react-router-dom";
 import ListGroup from "./common/listGroup";
 import Searchbox from "./searchBox";
-// import MoviesTable from "./moviesTable";
+import MoviesTable from "./moviesTable";
 class Movies extends Component {
   state = {
     movies: [],
@@ -110,13 +110,13 @@ class Movies extends Component {
             value={this.state.SearchQuery}
             onChange={this.handleSearch}
           />
-          {/* <MoviesTable
+          <MoviesTable
             movies={data}
             sortColumn={this.state.sortColumn}
             onLike={this.handleLike}
             onDelete={this.handleDelete}
             onSort={this.handleSort}
-          /> */}
+          />
           <Pagination
             count={totalCount}
             pageSize={this.state.pageSize}
