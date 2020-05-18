@@ -14,7 +14,7 @@
     "react-dom": "^16.4.1",
     "react-router-dom": "",
     "react-scripts": "",
-    "react-toastify": "0"
+    "react-toastify": ""
   },
   "scripts": {
     "start": "react-scripts start",
