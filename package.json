@@ -1,7 +1,7 @@
 {
   "name": "vidly",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "axios": "",
     "bootstrap": "^4.1.1",

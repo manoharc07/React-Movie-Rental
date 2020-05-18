@@ -4,12 +4,12 @@ import React, { Component } from "react";
 import { toast } from "react-toastify";
 import { getMovies, deleteMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
-import Pagination from "./common/pagination";
-import MoviesTable from "./moviesTable";
 import { pagination } from "../utils/pagination";
-import ListGroup from "./common/listGroup";
+import Pagination from "./common/pagination";
 import { Link } from "react-router-dom";
+import ListGroup from "./common/listGroup";
 import Searchbox from "./searchBox";
+import MoviesTable from "./moviesTable";
 class Movies extends Component {
   state = {
     movies: [],
