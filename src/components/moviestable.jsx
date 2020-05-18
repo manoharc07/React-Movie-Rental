@@ -19,7 +19,7 @@ class MoviesTable extends Component {
       col: "title",
       label: "Title",
       content: (movie) => (
-        <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+        <Link to={`/react-project/movies/${movie._id}`}>{movie.title}</Link>
       ),
     },
     { col: "genre.name", label: "Genre" },
